@@ -80,7 +80,7 @@ end
     end
     @log.each_line do |line|
       bytes_read += line.size
-      if m = line.match(config[:pattern])
+      if !config[:pattern] || m = line.match(config[:pattern])
         out += line
         n_lines_read += 1
       end

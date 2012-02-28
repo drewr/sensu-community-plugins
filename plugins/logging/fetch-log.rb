@@ -50,10 +50,8 @@ class CheckLog < Sensu::Plugin::Check::CLI
     rescue => e
       unknown "Could not open log file: #{e}"
     end
-    n_lines_read = search_log
-    message "#{n_lines_read} new lines processed matching #{config[:pattern]}"
-    ok
-end
+    ok search_log
+  end
 
   def open_log
     state_dir = config[:state_auto] || config[:state_dir]
@@ -74,7 +72,6 @@ end
       @bytes_to_skip = 0
     end
     bytes_read = 0
-    n_lines_read = 0
     if @bytes_to_skip > 0
       @log.seek(@bytes_to_skip, File::SEEK_SET)
     end
@@ -82,13 +79,12 @@ end
       bytes_read += line.size
       if !config[:pattern] || m = line.match(config[:pattern])
         out += line
-        n_lines_read += 1
       end
     end
     FileUtils.mkdir_p(File.dirname(@state_file))
     File.open(@state_file, 'w') do |file|
       file.write(@bytes_to_skip + bytes_read)
     end
-    n_lines_read
+    out
   end
 end

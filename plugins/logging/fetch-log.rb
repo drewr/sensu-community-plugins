@@ -44,7 +44,6 @@ class FetchLog < Sensu::Plugin::Check::CLI
 
   def run
     unknown "No log file specified" unless config[:log_file]
-    unknown "No pattern specified" unless config[:pattern]
     begin
       open_log
     rescue => e

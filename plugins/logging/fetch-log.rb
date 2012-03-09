@@ -16,7 +16,7 @@ require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-plugin/check/cli'
 require 'fileutils'
 
-class CheckLog < Sensu::Plugin::Check::CLI
+class FetchLog < Sensu::Plugin::Check::CLI
 
   BASE_DIR = '/var/cache/fetch-log'
 

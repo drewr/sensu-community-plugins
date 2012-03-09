@@ -76,7 +76,7 @@ class FetchLog < Sensu::Plugin::Check::CLI
     end
     @log.each_line do |line|
       bytes_read += line.size
-      if config[:pattern].nil? || m = line.match(config[:pattern])
+      if config[:pattern].nil? || line.match(config[:pattern])
         out += line
       end
     end
